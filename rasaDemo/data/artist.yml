@@ -1,0 +1,24 @@
+version: "3.1"
+nlu:
+  - lookup: artist
+    examples: |
+      - Ed Sheeran
+      - Queen
+      - The Weeknd
+      - Adele
+      - Luis Fonsi
+      - Eagles
+      - Michael Jackson
+      - Coldplay
+      - Bruno Mars
+      - Billie Eilish
+      - Bee Gees
+      - Guns N' Roses
+      - John Lennon
+      - ABBA
+      - Beyoncé
+      - Taylor Swift
+      - The Beatles
+      - Led Zeppelin
+      - Bob Dylan
+      - Elvis Presley

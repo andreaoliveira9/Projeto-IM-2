@@ -1,0 +1,72 @@
+version: "3.1"
+intents:
+  - goodbye
+  - search_music
+  - play_playlist
+  - control_music
+  - change_track
+  - adjust_volume
+  - set_mode
+  - add_to_favorites
+  - confirm_action
+  - wich_music_is_playing
+  - add_music_to_queue
+  - add_music_to_playlist
+  - help
+
+entities:
+  - playlist
+  - song
+  - artist
+  - action
+  - direction
+  - mode
+  - help_option
+
+slots:
+  playlist:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: playlist
+  song:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: song
+  artist:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: artist
+  action:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: action
+  direction:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: direction
+  mode:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: mode
+  help_option:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: help_option
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
