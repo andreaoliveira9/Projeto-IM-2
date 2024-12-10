@@ -27,7 +27,7 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
 
 
 def gesture_control(youtube_music, message):
-    return
+    print(f"Gesture received: {message}")
 
 
 def speech_control(youtube_music, message):
@@ -317,21 +317,16 @@ def intent_not_sure(intent, entities):
 
 
 def process_message(message):
-    """Processa a mensagem recebida e extrai NLU."""
     if message == "OK":
-        return "OK"
+        return message, Type.OK
 
-    commands = ET.fromstring(message).findall(".//command")
-    json_command = commands.pop(0).text
+    json_command = ET.fromstring(message).find(".//command").text
     command = json.loads(json_command)
-    modality = command["recognized"][0]
 
-    if modality == "SPEECH":
+    if "nlu" in command:
         return json.loads(command["nlu"]), Type.SPEECH
-    elif modality == "GESTURES":
+    elif "recognized" in command:
         return command["recognized"][1], Type.GESTURE
-    elif modality == "FUSION":
-        return (command["recognized"][1:], commands), Type.FUSION
 
 
 async def main():
