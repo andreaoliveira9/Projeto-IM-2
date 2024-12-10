@@ -13,21 +13,6 @@ from tts import TTS
 HOST = "127.0.0.1"
 not_quit = True
 intent_not_undestand_well = None
-list_intent = [
-    "search_music",
-    "play_playlist",
-    "add_music_to_playlist",
-    "add_music_to_queue",
-    "wich_music_is_playing",
-    "control_music",
-    "change_track",
-    "adjust_volume",
-    "set_mode",
-    "add_to_favorites",
-    "confirm_action",
-    "goodbye",
-    "help",
-]
 
 
 async def message_handler(youtube_music: YoutubeMusic, message: str):
@@ -57,10 +42,7 @@ def speech_control(youtube_music, message):
     confidence = message["intent"]["confidence"]
     entities = message.get("entities", [])
 
-    if intent not in list_intent:
-        youtube_music.tts(random_not_understand())
-        return
-    elif intent == "confirm_action":
+    if intent == "confirm_action":
         if intent_not_undestand_well:
             if message["intent"]["name"] == "confirm_action":
                 if (
