@@ -64,22 +64,22 @@ def speech_control(youtube_music, message):
                 ):
                     intent = intent_not_undestand_well_voice.intent
                     entities = intent_not_undestand_well_voice.entities
-                    youtube_music.tts("Ok, vou fazer o que pediste.")
+                    youtube_music.sendoToTTS("Ok, vou fazer o que pediste.")
                 else:
-                    youtube_music.tts("Não entendi o que disseste.")
+                    youtube_music.sendoToTTS("Não entendi o que disseste.")
             else:
-                youtube_music.tts("Ok, não vou fazer nada.")
+                youtube_music.sendoToTTS("Ok, não vou fazer nada.")
 
             intent_not_undestand_well_voice = None
         else:
-            youtube_music.tts(random_not_understand())
+            youtube_music.sendoToTTS(random_not_understand())
 
     elif confidence <= 0.45:
-        youtube_music.tts(random_not_understand())
+        youtube_music.sendoToTTS(random_not_understand())
         return
     elif confidence > 0.45 and confidence < 0.8:
         intent_not_undestand_well_voice = IntentNotUnderstoodWellVoice(intent, entities)
-        youtube_music.tts(intent_not_undestand_well_voice.confirmation())
+        youtube_music.sendoToTTS(intent_not_undestand_well_voice.confirmation())
         return
 
     if intent == "control_music":  # DONE
@@ -90,7 +90,9 @@ def speech_control(youtube_music, message):
         elif action == "resume":
             youtube_music.resume()
         else:
-            youtube_music.tts("Não percebi se queres pausar ou continuar a música.")
+            youtube_music.sendoToTTS(
+                "Não percebi se queres pausar ou continuar a música."
+            )
 
     elif intent == "change_track":  # DONE
         # Mudar para próxima ou anterior
@@ -104,7 +106,7 @@ def speech_control(youtube_music, message):
         elif direction == "same":
             youtube_music.repeat_song()
         else:
-            youtube_music.tts(
+            youtube_music.sendoToTTS(
                 "Não percebi se queres passar para a póxima música, ir para a anterior ou repetir esta música."
             )
 
@@ -119,7 +121,7 @@ def speech_control(youtube_music, message):
         elif action == "unmute":
             youtube_music.unmute()
         else:
-            youtube_music.tts(
+            youtube_music.sendoToTTS(
                 "Não percebi de queres aumentar, diminuir, desloigar ou ligar o som."
             )
 
@@ -136,7 +138,7 @@ def speech_control(youtube_music, message):
         elif mode == "repeat_off":
             youtube_music.repeat_off()
         else:
-            youtube_music.tts("Não percebi qual o modo queres colocar.")
+            youtube_music.sendoToTTS("Não percebi qual o modo queres colocar.")
 
     elif intent == "add_to_favorites":  # DONE
         youtube_music.like_music()
@@ -150,11 +152,11 @@ def speech_control(youtube_music, message):
             youtube_music.play_music_searched()
         else:
             if not song and not artist:
-                youtube_music.tts("Não percebi o nome nem o artista.")
+                youtube_music.sendoToTTS("Não percebi o nome nem o artista.")
             elif not song:
-                youtube_music.tts("Não percebi o nome da música.")
+                youtube_music.sendoToTTS("Não percebi o nome da música.")
             elif not artist:
-                youtube_music.tts("Não percebi o nome do artista.")
+                youtube_music.sendoToTTS("Não percebi o nome do artista.")
 
     elif intent == "add_music_to_queue":  # DONE
         song = next((e["value"] for e in entities if e["entity"] == "song"), None)
@@ -165,11 +167,11 @@ def speech_control(youtube_music, message):
             youtube_music.add_to_queue()
         else:
             if not song and not artist:
-                youtube_music.tts("Não percebi o nome nem o artista.")
+                youtube_music.sendoToTTS("Não percebi o nome nem o artista.")
             elif not song:
-                youtube_music.tts("Não percebi o nome da música.")
+                youtube_music.sendoToTTS("Não percebi o nome da música.")
             elif not artist:
-                youtube_music.tts("Não percebi o nome do artista.")
+                youtube_music.sendoToTTS("Não percebi o nome do artista.")
 
     elif intent == "wich_music_is_playing":  # DONE
         youtube_music.get_current_music()
@@ -182,9 +184,9 @@ def speech_control(youtube_music, message):
         if playlist:
             youtube_music.play_playlist(playlist)
         else:
-            youtube_music.tts("Não percebi o nome da playlist.")
+            youtube_music.sendoToTTS("Não percebi o nome da playlist.")
 
-    elif intent == "add_music_to_playlist":  # DONE
+    elif intent == "add_music_to_playlist_search":  # DONE
         song = next((e["value"] for e in entities if e["entity"] == "song"), None)
         artist = next((e["value"] for e in entities if e["entity"] == "artist"), None)
         playlist = next(
@@ -193,24 +195,24 @@ def speech_control(youtube_music, message):
 
         if song and artist and playlist:
             youtube_music.search_music(song, artist)
-            youtube_music.add_music_to_playlist(playlist)
+            youtube_music.add_music_to_playlist_search(playlist)
         else:
             if not song and not artist and not playlist:
-                youtube_music.tts(
+                youtube_music.sendoToTTS(
                     "Não percebi o nome da música, do artista e da playlist."
                 )
             elif not song and not artist:
-                youtube_music.tts("Não percebi o nome da música e do artista.")
+                youtube_music.sendoToTTS("Não percebi o nome da música e do artista.")
             elif not song and not playlist:
-                youtube_music.tts("Não percebi o nome da música e da playlist.")
+                youtube_music.sendoToTTS("Não percebi o nome da música e da playlist.")
             elif not artist and not playlist:
-                youtube_music.tts("Não percebi o nome do artista e da playlist.")
+                youtube_music.sendoToTTS("Não percebi o nome do artista e da playlist.")
             elif not song:
-                youtube_music.tts("Não percebi o nome da música.")
+                youtube_music.sendoToTTS("Não percebi o nome da música.")
             elif not artist:
-                youtube_music.tts("Não percebi o nome do artista.")
+                youtube_music.sendoToTTS("Não percebi o nome do artista.")
             elif not playlist:
-                youtube_music.tts("Não percebi o nome da playlist.")
+                youtube_music.sendoToTTS("Não percebi o nome da playlist.")
 
     elif intent == "help":  # DONE
         option = next(
@@ -223,13 +225,13 @@ def speech_control(youtube_music, message):
             youtube_music.help()
 
     elif intent == "goodbye":  # DONE
-        youtube_music.tts(random_goodbye())
+        youtube_music.sendoToTTS(random_goodbye())
         youtube_music.close()
         global not_quit
         not_quit = False
 
     else:
-        youtube_music.tts(random_not_understand())
+        youtube_music.sendoToTTS(random_not_understand())
 
 
 async def main():
