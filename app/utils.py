@@ -36,7 +36,7 @@ class IntentNotUnderstoodWellVoice:
         self.intent = intent
         self.entities = entities
 
-    def intent_not_sure_voice(self):
+    def confirmation(self):
         if self.intent == "control_music":
             action = next(
                 (e["value"] for e in self.entities if e["entity"] == "action"), None
