@@ -2,6 +2,7 @@ import json
 import xml.etree.ElementTree as ET
 import ssl
 import websockets
+from enums import Type
 
 from utils import *
 from youtube_music import (
@@ -322,12 +323,18 @@ def process_message(message):
     """Processa a mensagem recebida e extrai NLU."""
     if message == "OK":
         return "OK"
-    else:
-        json_command = ET.fromstring(message).find(".//command").text
-        command = json.loads(json_command)["nlu"]
-        command = json.loads(command)
-        print(f"Command received: {command['text']}")
-        return command
+
+    commands = ET.fromstring(message).findall(".//command")
+    json_command = commands.pop(0).text
+    command = json.loads(json_command)
+    modality = command["recognized"][0]
+
+    if modality == "SPEECH":
+        return json.loads(command["nlu"]), Type.SPEECH
+    elif modality == "GESTURES":
+        return command["recognized"][1], Type.GESTURE
+    elif modality == "FUSION":
+        return (command["recognized"][1:], commands), Type.FUSION
 
 
 async def main():
