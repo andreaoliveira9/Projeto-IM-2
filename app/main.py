@@ -48,6 +48,10 @@ def speech_control(youtube_music, message):
     confidence = message["intent"]["confidence"]
     entities = message.get("entities", [])
 
+    intent = "wich_music_is_playing"
+    confidence = 1
+    entities = [{"entity": "action", "value": "mute"}]
+
     if intent == "confirm_action":
         if intent_not_undestand_well_voice:
             if message["intent"]["name"] == "confirm_action":
@@ -106,9 +110,9 @@ def speech_control(youtube_music, message):
     elif intent == "adjust_volume":  # DONE
         action = next((e["value"] for e in entities if e["entity"] == "action"), None)
         if action == "increase":
-            youtube_music.increase_volume()
+            youtube_music.increase_volume_generic(10)
         elif action == "decrease":
-            youtube_music.decrease_volume()
+            youtube_music.decrease_volume_generic(10)
         elif action == "mute":
             youtube_music.mute()
         elif action == "unmute":

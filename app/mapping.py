@@ -11,6 +11,9 @@ class MapObject:
     def find_elements(self, value):
         return self.browser.find_elements(By.XPATH, value)
 
+    def find_element_by_id(self, id):
+        return self.browser.find_element(By.ID, id)
+
 
 class Buttons(MapObject):
     @property
@@ -142,6 +145,16 @@ class Buttons(MapObject):
         return self.find_element(
             "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-browse-response/div[2]/div[4]/div[1]/ytmusic-two-column-browse-results-renderer/div[1]/ytmusic-section-list-renderer/div[2]/ytmusic-editable-playlist-detail-header-renderer/ytmusic-responsive-header-renderer/div[6]/ytmusic-play-button-renderer/div/yt-icon"
         )
+
+    @property
+    def volume_icon(self):
+        return self.find_element(
+            "/html/body/ytmusic-app/ytmusic-app-layout/ytmusic-player-bar/div[3]/div/tp-yt-paper-icon-button[1]"
+        )
+
+    @property
+    def volume_slider(self):
+        return self.find_element_by_id("volume-slider")
 
 
 class Inputs(MapObject):
