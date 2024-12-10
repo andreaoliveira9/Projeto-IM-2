@@ -12,7 +12,20 @@ from tts import TTS
 
 HOST = "127.0.0.1"
 not_quit = True
-intent_not_undestand_well = None
+intent_not_undestand_well_voice = None
+
+
+def process_message(message):
+    if message == "OK":
+        return message, Type.OK
+
+    json_command = ET.fromstring(message).find(".//command").text
+    command = json.loads(json_command)
+
+    if "nlu" in command:
+        return json.loads(command["nlu"]), Type.SPEECH
+    elif "recognized" in command:
+        return command["recognized"][1], Type.GESTURE
 
 
 async def message_handler(youtube_music: YoutubeMusic, message: str):
@@ -31,7 +44,7 @@ def gesture_control(youtube_music, message):
 
 
 def speech_control(youtube_music, message):
-    global intent_not_undestand_well
+    global intent_not_undestand_well_voice
     message = process_message(message)
     print(f"Message received: {message}")
 
@@ -43,21 +56,21 @@ def speech_control(youtube_music, message):
     entities = message.get("entities", [])
 
     if intent == "confirm_action":
-        if intent_not_undestand_well:
+        if intent_not_undestand_well_voice:
             if message["intent"]["name"] == "confirm_action":
                 if (
                     message["intent"]["confidence"] > 0.7
                     and message["entities"][0]["value"] == "confirm"
                 ):
-                    intent = intent_not_undestand_well.intent
-                    entities = intent_not_undestand_well.entities
+                    intent = intent_not_undestand_well_voice.intent
+                    entities = intent_not_undestand_well_voice.entities
                     youtube_music.tts("Ok, vou fazer o que pediste.")
                 else:
                     youtube_music.tts("Não entendi o que disseste.")
             else:
                 youtube_music.tts("Ok, não vou fazer nada.")
 
-            intent_not_undestand_well = None
+            intent_not_undestand_well_voice = None
         else:
             youtube_music.tts(random_not_understand())
 
@@ -65,8 +78,8 @@ def speech_control(youtube_music, message):
         youtube_music.tts(random_not_understand())
         return
     elif confidence > 0.45 and confidence < 0.8:
-        intent_not_undestand_well = IntentNotUnderstoodWell(intent, entities)
-        youtube_music.tts(intent_not_sure(intent, entities))
+        intent_not_undestand_well_voice = IntentNotUnderstoodWellVoice(intent, entities)
+        youtube_music.tts(intent_not_undestand_well_voice.intent_not_sure())
         return
 
     if intent == "control_music":  # DONE
@@ -217,116 +230,6 @@ def speech_control(youtube_music, message):
 
     else:
         youtube_music.tts(random_not_understand())
-
-
-def intent_not_sure(intent, entities):
-    if intent == "control_music":
-        action = next((e["value"] for e in entities if e["entity"] == "action"), None)
-
-        if action == "pause":
-            return "Penso que disseste que querias pausar a música, está certo?"
-        elif action == "resume":
-            return "Penso que disseste que querias continuar a música, está certo?"
-
-    elif intent == "change_track":
-        direction = next(
-            (e["value"] for e in entities if e["entity"] == "direction"), None
-        )
-
-        if direction == "next":
-            return "Penso que disseste que querias mudar para a próxima música, está certo?"
-        elif direction == "previous":
-            return "Penso que disseste que querias mudar para a música anterior, está certo?"
-        elif direction == "same":
-            return "Penso que disseste que querias repetir a música atual, está certo?"
-
-    elif intent == "adjust_volume":
-        action = next((e["value"] for e in entities if e["entity"] == "action"), None)
-
-        if action == "increase":
-            return "Penso que disseste que querias aumentar o volume, está certo?"
-        elif action == "decrease":
-            return "Penso que disseste que querias diminuir o volume, está certo?"
-        elif action == "mute":
-            return "Penso que disseste que querias silenciar a música, está certo?"
-        elif action == "unmute":
-            return "Penso que disseste que querias ativar o som, está certo?"
-
-    elif intent == "set_mode":
-        mode = next((e["value"] for e in entities if e["entity"] == "mode"), None)
-
-        if mode == "shuffle_on":
-            return "Penso que disseste que querias ativar o modo aleatório, está certo?"
-        elif mode == "shuffle_off":
-            return (
-                "Penso que disseste que querias desativar o modo aleatório, está certo?"
-            )
-        elif mode == "repeat_one":
-            return "Penso que disseste que querias repetir a música atual, está certo?"
-        elif mode == "repeat_all":
-            return "Penso que disseste que querias repetir a lista de reprodução, está certo?"
-        elif mode == "repeat_off":
-            return "Penso que disseste que querias desativar a repetição, está certo?"
-
-    elif intent == "add_to_favorites":
-        return "Penso que disseste que querias adicionar a música aos favoritos, está certo?"
-
-    elif intent == "search_music":
-        song = next((e["value"] for e in entities if e["entity"] == "song"), None)
-        artist = next((e["value"] for e in entities if e["entity"] == "artist"), None)
-
-        return f"Penso que disseste que querias pesquisar a música '{song}' de {artist}, está certo?"
-
-    elif intent == "add_music_to_queue":
-        song = next((e["value"] for e in entities if e["entity"] == "song"), None)
-        artist = next((e["value"] for e in entities if e["entity"] == "artist"), None)
-
-        return f"Penso que disseste que querias adicionar a música '{song}' de {artist} à fila de reprodução, está certo?"
-
-    elif intent == "wich_music_is_playing":
-        return "Penso que disseste que querias saber qual a música que está a tocar, está certo?"
-
-    elif intent == "play_playlist":
-        playlist = next((e["value"] for e in entities if e["entity"] == "playlist"), "")
-
-        return (
-            f"Penso que disseste que querias tocar a playlist '{playlist}', está certo?"
-        )
-
-    elif intent == "add_music_to_playlist":
-        song = next((e["value"] for e in entities if e["entity"] == "song"), None)
-        artist = next((e["value"] for e in entities if e["entity"] == "artist"), None)
-        playlist = next(
-            (e["value"] for e in entities if e["entity"] == "playlist"), None
-        )
-
-        return f"Penso que disseste que querias adicionar a música '{song}' de {artist} à playlist '{playlist}', está certo?"
-
-    elif intent == "help":
-        option = next(
-            (e["value"] for e in entities if e["entity"] == "help_option"), None
-        )
-
-        if option:
-            return f"Penso que disseste que querias ajuda sobre '{option}', está certo?"
-        else:
-            return "Penso que disseste que querias ajuda, está certo?"
-
-    elif intent == "goodbye":
-        return "Penso que disseste que querias fechar o aplicativo, está certo?"
-
-
-def process_message(message):
-    if message == "OK":
-        return message, Type.OK
-
-    json_command = ET.fromstring(message).find(".//command").text
-    command = json.loads(json_command)
-
-    if "nlu" in command:
-        return json.loads(command["nlu"]), Type.SPEECH
-    elif "recognized" in command:
-        return command["recognized"][1], Type.GESTURE
 
 
 async def main():
