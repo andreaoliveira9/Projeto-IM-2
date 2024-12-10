@@ -31,6 +31,21 @@ list_intent = [
 
 
 async def message_handler(youtube_music: YoutubeMusic, message: str):
+    message, typ = process_message(message)
+
+    if typ == Type.SPEECH:
+        speech_control(youtube_music, message)
+    elif typ == Type.GESTURE:
+        gesture_control(youtube_music, message)
+    elif typ == Type.OK:
+        return
+
+
+def gesture_control(youtube_music, message):
+    return
+
+
+def speech_control(youtube_music, message):
     global intent_not_undestand_well
     message = process_message(message)
     print(f"Message received: {message}")
