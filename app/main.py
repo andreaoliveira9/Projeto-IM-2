@@ -13,6 +13,7 @@ from tts import TTS
 HOST = "127.0.0.1"
 not_quit = True
 intent_not_undestand_well_voice = None
+gesture_confirmation = None
 
 
 def process_message(message):
@@ -39,17 +40,9 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
         return
 
 
-def gesture_control(youtube_music, message):
-    print(f"Gesture received: {message}")
-
-
 def speech_control(youtube_music, message):
     global intent_not_undestand_well_voice
-    message = process_message(message)
-    print(f"Message received: {message}")
-
-    if message == "OK":
-        return "OK"
+    print(f"Speech received: {message}")
 
     intent = message["intent"]["name"]
     confidence = message["intent"]["confidence"]
@@ -234,6 +227,18 @@ def speech_control(youtube_music, message):
         youtube_music.sendoToTTS(random_not_understand())
 
 
+def gesture_control(youtube_music, message):
+    print(f"Gesture received: {message}")
+
+    if message == "HANDGOODBYE":
+        global not_quit, gesture_confirmation
+        if gesture_confirmation == "HANDGOODBYE":
+            not_quit = False
+        else:
+            gesture_confirmation = "HANDGOODBYE"
+            youtube_music.sendoToTTS("Tens a certeza que queres sair?")
+
+
 async def main():
     tts = TTS(FusionAdd=f"https://{HOST}:8000/IM/USER1/APPSPEECH").sendToVoice
     youtube_music = YoutubeMusic(
@@ -258,9 +263,7 @@ async def main():
                 tts("Ocorreu um erro, a fechar o aplicativo")
                 print(f"Error: {e}")
 
-        print("Closing connection")
-        await websocket.close()
-        print("Connection closed")
+        youtube_music.close()
         exit(0)
 
 

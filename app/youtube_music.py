@@ -514,4 +514,3 @@ class YoutubeMusic:
 
     def close(self):
         self.browser.close()
-        exit()
