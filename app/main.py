@@ -215,7 +215,7 @@ def speech_control(youtube_music, message):
         if option:
             youtube_music.help(option)
         else:
-            youtube_music.help()
+            youtube_music.help(None)
 
     elif intent == "goodbye":  # DONE
         youtube_music.sendoToTTS(random_goodbye())
