@@ -3,11 +3,10 @@ import xml.etree.ElementTree as ET
 import ssl
 import websockets
 from enums import Type
+import time
 
 from utils import *
-from youtube_music import (
-    YoutubeMusic,
-)
+from youtube_music import YoutubeMusic
 from tts import TTS
 
 HOST = "127.0.0.1"
@@ -32,12 +31,88 @@ def process_message(message):
 async def message_handler(youtube_music: YoutubeMusic, message: str):
     message, typ = process_message(message)
 
+    """ typ = Type.GESTURE
+    message = "OPENEXPLORE" """
     if typ == Type.SPEECH:
         speech_control(youtube_music, message)
     elif typ == Type.GESTURE:
         gesture_control(youtube_music, message)
     elif typ == Type.OK:
         return
+
+    """ time.sleep(1)
+
+    for i in range(1):
+        typ = Type.GESTURE
+        message = "SCROLLDOWNCATEGORY"
+        if typ == Type.SPEECH:
+            speech_control(youtube_music, message)
+        elif typ == Type.GESTURE:
+            gesture_control(youtube_music, message)
+        elif typ == Type.OK:
+            return
+
+        time.sleep(1)
+
+    for i in range(1):
+        typ = Type.GESTURE
+        message = "MOVERIGHTCATEGORY"
+        if typ == Type.SPEECH:
+            speech_control(youtube_music, message)
+        elif typ == Type.GESTURE:
+            gesture_control(youtube_music, message)
+        elif typ == Type.OK:
+            return
+
+        time.sleep(1)
+
+    for i in range(1):
+        typ = Type.GESTURE
+        message = "MOVEDOWNCATEGORY"
+        if typ == Type.SPEECH:
+            speech_control(youtube_music, message)
+        elif typ == Type.GESTURE:
+            gesture_control(youtube_music, message)
+        elif typ == Type.OK:
+            return
+
+        time.sleep(1)
+
+    for i in range(1):
+        typ = Type.GESTURE
+        message = "MOVELEFTCATEGORY"
+        if typ == Type.SPEECH:
+            speech_control(youtube_music, message)
+        elif typ == Type.GESTURE:
+            gesture_control(youtube_music, message)
+        elif typ == Type.OK:
+            return
+
+        time.sleep(1)
+
+    for i in range(1):
+        typ = Type.GESTURE
+        message = "MOVEUPCATEGORY"
+        if typ == Type.SPEECH:
+            speech_control(youtube_music, message)
+        elif typ == Type.GESTURE:
+            gesture_control(youtube_music, message)
+        elif typ == Type.OK:
+            return
+
+        time.sleep(1)
+
+    for i in range(1):
+        typ = Type.GESTURE
+        message = "SELECTCATEGORY"
+        if typ == Type.SPEECH:
+            speech_control(youtube_music, message)
+        elif typ == Type.GESTURE:
+            gesture_control(youtube_music, message)
+        elif typ == Type.OK:
+            return
+
+        time.sleep(1) """
 
 
 def speech_control(youtube_music, message):
@@ -232,15 +307,61 @@ def speech_control(youtube_music, message):
 
 
 def gesture_control(youtube_music, message):
+    from youtube_music import LAST_ACTION
+
     print(f"Gesture received: {message}")
 
-    if message == "HANDGOODBYE":
+    if message == "HANDGOODBYE":  # Acenar com a mão para sair
         global not_quit, gesture_confirmation
         if gesture_confirmation == "HANDGOODBYE":
             not_quit = False
         else:
             gesture_confirmation = "HANDGOODBYE"
             youtube_music.sendoToTTS("Tens a certeza que queres sair?")
+    elif message == "HANDMUTE":  # Fazer gesto de shiu na boca
+        youtube_music.mute()
+    elif message == "HANDUNMUTE":  # Apontar para a boca
+        youtube_music.unmute()
+    elif message == "HANDPAUSE":  # Mão aberta para a frente
+        youtube_music.pause()
+    elif message == "HANDRESUME":  # Girar com as mãos para a frente
+        youtube_music.resume()
+    elif message == "HANDNEXT":  # Deslocar mão para a direita
+        youtube_music.next_song()
+    elif message == "HANDPREVIOUS":  # Deslocar mão para a esquerda
+        youtube_music.previous_song()
+    elif message == "OPENEXPLORE":  # Abrir mãos como se fosse um livro
+        youtube_music.open_explore()
+    elif message == "SCROLLUPCATEGORY":  # Mão em pinça para baixo
+        youtube_music.scroll_up_categories()
+    elif message == "SCROLLDOWNCATEGORY":  # Mão em pinça para cima
+        youtube_music.scroll_down_categories()
+    elif message == "MOVEUPCATEGORY":  # Apontar para cima
+        youtube_music.move_up_category()
+    elif message == "MOVEDOWNCATEGORY":  # Apontar para baixo
+        youtube_music.move_down_category()
+    elif message == "MOVELEFTCATEGORY":  # Apontar para a esquerda
+        youtube_music.move_left_category()
+    elif message == "MOVERIGHTCATEGORY":  # Apontar para a direita
+        youtube_music.move_right_category()
+    elif message == "SELECTCATEGORY":  # Apontar e mover a mão para a frente
+        if (
+            LAST_ACTION == "scroll_up_categories"
+            or LAST_ACTION == "scroll_down_categories"
+            or LAST_ACTION == "move_down_category"
+            or LAST_ACTION == "move_left_category"
+            or LAST_ACTION == "move_right_category"
+            or LAST_ACTION == "move_up_category"
+        ):
+            youtube_music.select_something_category()
+        else:
+            youtube_music.sendoToTTS(
+                "Para selecionar algo, primeiro navega até 'Explorar'."
+            )
+    elif message == "HANDLIKE":  # Polegar para cima
+        youtube_music.like_music()
+    elif message == "HELP":  # Coçar a cabeça do lado direito
+        youtube_music.help(None)
 
 
 async def main():

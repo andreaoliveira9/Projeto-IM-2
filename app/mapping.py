@@ -41,10 +41,6 @@ class Buttons(MapObject):
         )
 
     @property
-    def volume_slider(self):
-        return self.find_element("//*[@id='volume-slider'']")
-
-    @property
     def mute(self):
         return self.find_element(
             "//*[@id='right-controls']/div/tp-yt-paper-icon-button[1]"
@@ -114,6 +110,12 @@ class Buttons(MapObject):
     def library_tab(self):
         return self.find_element(
             "/html/body/ytmusic-app/ytmusic-app-layout/tp-yt-app-drawer/div[2]/div/div[2]/ytmusic-guide-renderer/div[2]/ytmusic-guide-section-renderer[1]/div[2]/ytmusic-guide-entry-renderer[3]/tp-yt-paper-item"
+        )
+
+    @property
+    def explore_tab(self):
+        return self.find_element(
+            "/html/body/ytmusic-app/ytmusic-app-layout/tp-yt-app-drawer/div[2]/div/div[2]/ytmusic-guide-renderer/div[2]/ytmusic-guide-section-renderer[1]/div[2]/ytmusic-guide-entry-renderer[2]/tp-yt-paper-item"
         )
 
     @property
