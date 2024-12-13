@@ -75,9 +75,9 @@ class YoutubeMusic:
             if manual_login:
                 self.perform_login()
 
-            """ self.tts(
+            self.tts(
                 "Bem-vindo ao YouTube Music, onde você pode ouvir suas músicas favoritas!"
-            ) """
+            )
 
         except Exception as e:
             self.tts("Não foi possível iniciar o YouTube Music.")

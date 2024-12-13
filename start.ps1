@@ -12,7 +12,7 @@ Start-Process -FilePath .\start_web_app.bat
 
 Set-Location -Path ..
 Start-Sleep -Seconds 3
-Start-Process "chrome.exe" "https://127.0.0.1:8082/index.htm"
+Start-Process "msedge.exe" "https://127.0.0.1:8082/index.htm"
 
 Set-Location -Path .\app
 .\venv\Scripts\activate
