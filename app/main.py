@@ -332,9 +332,9 @@ def gesture_control(youtube_music, message):
         youtube_music.previous_song()
     elif message == "OPENEXPLORE":  # Abrir mãos como se fosse um livro
         youtube_music.open_explore()
-    elif message == "SCROLLUP":  # Mão em pinça para baixo
+    elif message == "SCROLLUPCATEGORY":  # Mão em pinça para baixo
         youtube_music.scroll_up_categories()
-    elif message == "SCROLLDOWN":  # Mão em pinça para cima
+    elif message == "SCROLLDOWNCATEGORY":  # Mão em pinça para cima
         youtube_music.scroll_down_categories()
     elif message == "MOVEUPCATEGORY":  # Apontar para cima
         youtube_music.move_up_category()
@@ -358,10 +358,6 @@ def gesture_control(youtube_music, message):
             youtube_music.sendoToTTS(
                 "Para selecionar algo, primeiro navega até 'Explorar'."
             )
-    elif message == "HANDLIKE":  # Polegar para cima
-        youtube_music.like_music()
-    elif message == "HELP":  # Coçar a cabeça do lado direito
-        youtube_music.help(None)
 
 
 async def main():
