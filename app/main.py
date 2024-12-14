@@ -322,8 +322,6 @@ def gesture_control(youtube_music, message):
         youtube_music.mute()
     elif message == "HANDUNMUTE":  # Apontar para a boca
         youtube_music.unmute()
-    elif message == "HANDPAUSE":  # Mão aberta para a frente
-        youtube_music.pause()
     elif message == "HANDRESUME":  # Girar com as mãos para a frente
         youtube_music.resume()
     elif message == "HANDNEXT":  # Deslocar mão para a direita
@@ -344,7 +342,7 @@ def gesture_control(youtube_music, message):
         youtube_music.move_left_category()
     elif message == "MOVERIGHTCATEGORY":  # Apontar para a direita
         youtube_music.move_right_category()
-    elif message == "SELECTCATEGORY":  # Apontar e mover a mão para a frente
+    elif message == "SELECTPAUSE":  # Mão aberta e movert para a frente
         if (
             LAST_ACTION == "scroll_up_categories"
             or LAST_ACTION == "scroll_down_categories"
@@ -355,9 +353,7 @@ def gesture_control(youtube_music, message):
         ):
             youtube_music.select_something_category()
         else:
-            youtube_music.sendoToTTS(
-                "Para selecionar algo, primeiro navega até 'Explorar'."
-            )
+            youtube_music.pause()
 
 
 async def main():
