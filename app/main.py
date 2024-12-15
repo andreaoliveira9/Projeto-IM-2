@@ -31,8 +31,8 @@ def process_message(message):
 async def message_handler(youtube_music: YoutubeMusic, message: str):
     message, typ = process_message(message)
 
-    """ typ = Type.GESTURE
-    message = "OPENEXPLORE" """
+    typ = Type.GESTURE
+    message = "OPENEXPLORE"
     if typ == Type.SPEECH:
         speech_control(youtube_music, message)
     elif typ == Type.GESTURE:
@@ -40,21 +40,10 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
     elif typ == Type.OK:
         return
 
-    """ time.sleep(1)
+    time.sleep(3)
 
-    for i in range(1):
-        typ = Type.GESTURE
-        message = "SCROLLDOWNCATEGORY"
-        if typ == Type.SPEECH:
-            speech_control(youtube_music, message)
-        elif typ == Type.GESTURE:
-            gesture_control(youtube_music, message)
-        elif typ == Type.OK:
-            return
 
-        time.sleep(1)
-
-    for i in range(1):
+    for i in range(2):
         typ = Type.GESTURE
         message = "MOVERIGHTCATEGORY"
         if typ == Type.SPEECH:
@@ -63,20 +52,7 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
             gesture_control(youtube_music, message)
         elif typ == Type.OK:
             return
-
-        time.sleep(1)
-
-    for i in range(1):
-        typ = Type.GESTURE
-        message = "MOVEDOWNCATEGORY"
-        if typ == Type.SPEECH:
-            speech_control(youtube_music, message)
-        elif typ == Type.GESTURE:
-            gesture_control(youtube_music, message)
-        elif typ == Type.OK:
-            return
-
-        time.sleep(1)
+        time.sleep(2)
 
     for i in range(1):
         typ = Type.GESTURE
@@ -87,8 +63,41 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
             gesture_control(youtube_music, message)
         elif typ == Type.OK:
             return
-
         time.sleep(1)
+
+    for i in range(1):
+        typ = Type.GESTURE
+        message = "SCROLLDOWNCATEGORY"
+        if typ == Type.SPEECH:
+            speech_control(youtube_music, message)
+        elif typ == Type.GESTURE:
+            gesture_control(youtube_music, message)
+        elif typ == Type.OK:
+            return
+        time.sleep(2)
+
+
+    for i in range(2):
+        typ = Type.GESTURE
+        message = "MOVEDOWNCATEGORY"
+        if typ == Type.SPEECH:
+            speech_control(youtube_music, message)
+        elif typ == Type.GESTURE:
+            gesture_control(youtube_music, message)
+        elif typ == Type.OK:
+            return
+        time.sleep(1)
+
+    for i in range(2):
+        typ = Type.GESTURE
+        message = "MOVERIGHTCATEGORY"
+        if typ == Type.SPEECH:
+            speech_control(youtube_music, message)
+        elif typ == Type.GESTURE:
+            gesture_control(youtube_music, message)
+        elif typ == Type.OK:
+            return
+        time.sleep(2)
 
     for i in range(1):
         typ = Type.GESTURE
@@ -99,8 +108,51 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
             gesture_control(youtube_music, message)
         elif typ == Type.OK:
             return
-
         time.sleep(1)
+
+    for i in range(1):
+        typ = Type.GESTURE
+        message = "SCROLLDOWNCATEGORY"
+        if typ == Type.SPEECH:
+            speech_control(youtube_music, message)
+        elif typ == Type.GESTURE:
+            gesture_control(youtube_music, message)
+        elif typ == Type.OK:
+            return
+        time.sleep(2)
+        
+    for i in range(2):
+        typ = Type.GESTURE
+        message = "MOVEDOWNCATEGORY"
+        if typ == Type.SPEECH:
+            speech_control(youtube_music, message)
+        elif typ == Type.GESTURE:
+            gesture_control(youtube_music, message)
+        elif typ == Type.OK:
+            return
+        time.sleep(1)
+
+    for i in range(2):
+        typ = Type.GESTURE
+        message = "MOVERIGHTCATEGORY"
+        if typ == Type.SPEECH:
+            speech_control(youtube_music, message)
+        elif typ == Type.GESTURE:
+            gesture_control(youtube_music, message)
+        elif typ == Type.OK:
+            return
+        time.sleep(2)
+
+    for i in range(1):
+        typ = Type.GESTURE
+        message = "MOVEUPCATEGORY"
+        if typ == Type.SPEECH:
+            speech_control(youtube_music, message)
+        elif typ == Type.GESTURE:
+            gesture_control(youtube_music, message)
+        elif typ == Type.OK:
+            return
+        time.sleep(1)    
 
     for i in range(1):
         typ = Type.GESTURE
@@ -112,7 +164,7 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
         elif typ == Type.OK:
             return
 
-        time.sleep(1) """
+        time.sleep(1)
 
 
 def speech_control(youtube_music, message):
@@ -352,6 +404,7 @@ def gesture_control(youtube_music, message):
             or LAST_ACTION == "move_left_category"
             or LAST_ACTION == "move_right_category"
             or LAST_ACTION == "move_up_category"
+            or LAST_ACTION == "open_explore"
         ):
             youtube_music.select_something_category()
         else:

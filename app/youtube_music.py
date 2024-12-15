@@ -16,6 +16,10 @@ from dotenv import load_dotenv
 
 from utils import *
 from mapping import Buttons, Inputs
+import logging
+
+# Configure logging
+logging.basicConfig(filename='play.log', level=logging.INFO, format='%(asctime)s - %(message)s')
 
 LAST_ACTION = None
 
@@ -71,6 +75,7 @@ class YoutubeMusic:
             self.button = Buttons(self.browser)
             self.input = Inputs(self.browser)
             self.wait = WebDriverWait(self.browser, 20)
+            self.current_selected_category = None
 
             if manual_login:
                 self.perform_login()
@@ -586,6 +591,31 @@ class YoutubeMusic:
             self.explore_selected = 0
             self.selected = 0
             self.button.explore_tab.click()
+            time.sleep(2)
+            try:
+                if self.explore_selected == 0:
+                    container = self.browser.find_element(
+                        By.XPATH,
+                        "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-browse-response/div[2]/div[4]/ytmusic-section-list-renderer/div[2]/ytmusic-carousel-shelf-renderer[1]/div/ytmusic-carousel/div/ul",
+                    )
+
+                    card = container.find_elements(
+                        By.CSS_SELECTOR,
+                        "#items ytmusic-two-row-item-renderer",
+                    )
+
+                    self.current_selected_category = card[self.selected].find_element(By.ID, "content")
+                    self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, self.current_selected_category
+                    )
+                    actions = ActionChains(self.browser)
+                    actions.move_to_element(self.current_selected_category).perform()
+                    self.button_selected = self.current_selected_category
+            except:
+                self.sendoToTTS("Não foi possível selecionar o primeiro elemento.")
+
             LAST_ACTION = "open_explore"
         except:
             self.sendoToTTS("Não foi possível abrir a biblioteca.")
@@ -614,6 +644,119 @@ class YoutubeMusic:
             )
 
             self.explore_selected = index
+            if self.explore_selected == 0:
+                    container = self.browser.find_element(
+                        By.XPATH,
+                        "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-browse-response/div[2]/div[4]/ytmusic-section-list-renderer/div[2]/ytmusic-carousel-shelf-renderer[1]/div/ytmusic-carousel/div/ul",
+                    )
+
+                    card = container.find_elements(
+                        By.CSS_SELECTOR,
+                        "#items ytmusic-two-row-item-renderer",
+                    )
+
+                    self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '';
+                        """, self.current_selected_category
+                    )
+
+                    self.current_selected_category = card[self.selected].find_element(By.ID, "content")
+                    self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, self.current_selected_category
+                    )
+                    actions = ActionChains(self.browser)
+                    actions.move_to_element(self.current_selected_category).perform()
+                    self.button_selected = self.current_selected_category
+
+            elif self.explore_selected == 1:
+                container = self.browser.find_element(
+                    By.XPATH,
+                    "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-browse-response/div[2]/div[4]/ytmusic-section-list-renderer/div[2]/ytmusic-carousel-shelf-renderer[2]/div/ytmusic-carousel/div/ul",
+                )
+
+                card = container.find_elements(
+                    By.CSS_SELECTOR,
+                    "#items ytmusic-navigation-button-renderer",
+                )
+
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '';
+                        """, self.current_selected_category
+                )
+                self.selected = 0
+
+                self.current_selected_category = card[self.selected].find_element(By.CSS_SELECTOR, "button")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, self.current_selected_category
+                )
+
+                actions = ActionChains(self.browser)
+                actions.move_to_element(self.current_selected_category).perform()
+                self.button_selected = self.current_selected_category
+
+            elif self.explore_selected == 2:
+                container = self.browser.find_element(
+                    By.XPATH,
+                    "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-browse-response/div[2]/div[4]/ytmusic-section-list-renderer/div[2]/ytmusic-carousel-shelf-renderer[3]/div/ytmusic-carousel/div/ul",
+                )
+
+                card = container.find_elements(
+                    By.CSS_SELECTOR,
+                    "#items ytmusic-responsive-list-item-renderer",
+                )
+
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '';
+                        """, self.current_selected_category
+                )
+                self.selected = 0
+
+                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, self.current_selected_category
+                )
+
+                actions = ActionChains(self.browser)
+                actions.move_to_element(self.current_selected_category).perform()
+                self.button_selected = self.current_selected_category
+            elif self.explore_selected == 3:
+                container = self.browser.find_element(
+                    By.XPATH,
+                    "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-browse-response/div[2]/div[4]/ytmusic-section-list-renderer/div[2]/ytmusic-carousel-shelf-renderer[4]/div/ytmusic-carousel/div/ul",
+                )
+
+                card = container.find_elements(
+                    By.CSS_SELECTOR,
+                    "#items ytmusic-two-row-item-renderer",
+                )
+
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '';
+                        """, self.current_selected_category
+                )
+                self.selected = 0
+
+                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, self.current_selected_category
+                )
+
+                actions = ActionChains(self.browser)
+                actions.move_to_element(self.current_selected_category).perform()
+                self.button_selected = self.current_selected_category
+
             LAST_ACTION = "scroll_up_categories"
         except:
             self.sendoToTTS("Não foi possível mover para cima.")
@@ -624,7 +767,7 @@ class YoutubeMusic:
         if self.browser.current_url != "https://music.youtube.com/explore":
             self.sendoToTTS("Não é possível mover para baixo nesta página.")
             return
-
+        
         index = self.explore_selected + 1
         if index >= len(explore_categories):
             self.sendoToTTS("Não há mais categorias abaixo.")
@@ -642,6 +785,119 @@ class YoutubeMusic:
             )
 
             self.explore_selected = index
+            if self.explore_selected == 0:
+                    container = self.browser.find_element(
+                        By.XPATH,
+                        "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-browse-response/div[2]/div[4]/ytmusic-section-list-renderer/div[2]/ytmusic-carousel-shelf-renderer[1]/div/ytmusic-carousel/div/ul",
+                    )
+
+                    card = container.find_elements(
+                        By.CSS_SELECTOR,
+                        "#items ytmusic-two-row-item-renderer",
+                    )
+
+                    self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '';
+                        """, self.current_selected_category
+                    )
+
+                    self.current_selected_category = card[self.selected].find_element(By.ID, "content")
+                    self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, self.current_selected_category
+                    )
+                    actions = ActionChains(self.browser)
+                    actions.move_to_element(self.current_selected_category).perform()
+                    self.button_selected = self.current_selected_category
+
+            elif self.explore_selected == 1:
+                container = self.browser.find_element(
+                    By.XPATH,
+                    "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-browse-response/div[2]/div[4]/ytmusic-section-list-renderer/div[2]/ytmusic-carousel-shelf-renderer[2]/div/ytmusic-carousel/div/ul",
+                )
+
+                card = container.find_elements(
+                    By.CSS_SELECTOR,
+                    "#items ytmusic-navigation-button-renderer",
+                )
+
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '';
+                        """, self.current_selected_category
+                )
+                self.selected = 0
+
+                self.current_selected_category = card[self.selected].find_element(By.CSS_SELECTOR, "button")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, self.current_selected_category
+                )
+
+                actions = ActionChains(self.browser)
+                actions.move_to_element(self.current_selected_category).perform()
+                self.button_selected = self.current_selected_category
+
+            elif self.explore_selected == 2:
+                container = self.browser.find_element(
+                    By.XPATH,
+                    "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-browse-response/div[2]/div[4]/ytmusic-section-list-renderer/div[2]/ytmusic-carousel-shelf-renderer[3]/div/ytmusic-carousel/div/ul",
+                )
+
+                card = container.find_elements(
+                    By.CSS_SELECTOR,
+                    "#items ytmusic-responsive-list-item-renderer",
+                )
+
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '';
+                        """, self.current_selected_category
+                )
+                self.selected = 0
+
+                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, self.current_selected_category
+                )
+
+                actions = ActionChains(self.browser)
+                actions.move_to_element(self.current_selected_category).perform()
+                self.button_selected = self.current_selected_category
+            elif self.explore_selected == 3:
+                container = self.browser.find_element(
+                    By.XPATH,
+                    "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-browse-response/div[2]/div[4]/ytmusic-section-list-renderer/div[2]/ytmusic-carousel-shelf-renderer[4]/div/ytmusic-carousel/div/ul",
+                )
+
+                card = container.find_elements(
+                    By.CSS_SELECTOR,
+                    "#items ytmusic-two-row-item-renderer",
+                )
+
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '';
+                        """, self.current_selected_category
+                )
+                self.selected = 0
+
+                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, self.current_selected_category
+                )
+
+                actions = ActionChains(self.browser)
+                actions.move_to_element(self.current_selected_category).perform()
+                self.button_selected = self.current_selected_category
+
             LAST_ACTION = "scroll_down_categories"
         except:
             self.sendoToTTS("Não foi possível mover para baixo.")
@@ -658,6 +914,7 @@ class YoutubeMusic:
                     By.XPATH,
                     "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-browse-response/div[2]/div[4]/ytmusic-section-list-renderer/div[2]/ytmusic-carousel-shelf-renderer[1]/div/ytmusic-carousel/div/ul",
                 )
+                
 
                 card = container.find_elements(
                     By.CSS_SELECTOR,
@@ -667,10 +924,22 @@ class YoutubeMusic:
                 if self.selected + 1 > len(card) - 1:
                     self.sendoToTTS("Não há mais opções à direita.")
                     return
+                
+                play = card[self.selected].find_element(By.ID, "content")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '';
+                        """, play
+                )
 
                 self.selected += 1
 
                 play = card[self.selected].find_element(By.ID, "content")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, play
+                )
 
                 actions = ActionChains(self.browser)
                 actions.move_to_element(play).perform()
@@ -691,9 +960,20 @@ class YoutubeMusic:
                     self.sendoToTTS("Não há mais opções à direita.")
                     return
 
+                play = card[self.selected].find_element(By.CSS_SELECTOR, "button")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '';
+                        """, play
+                )
                 self.selected += 4
 
                 play = card[self.selected].find_element(By.CSS_SELECTOR, "button")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, play
+                )
 
                 actions = ActionChains(self.browser)
                 actions.move_to_element(play).perform()
@@ -715,9 +995,20 @@ class YoutubeMusic:
                     self.sendoToTTS("Não há mais opções à direita.")
                     return
 
+                play = card[self.selected].find_element(By.ID, "content")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '';
+                        """, play
+                )
                 self.selected += 4
 
                 play = card[self.selected].find_element(By.ID, "content")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, play
+                )
 
                 actions = ActionChains(self.browser)
                 actions.move_to_element(play).perform()
@@ -738,9 +1029,20 @@ class YoutubeMusic:
                     self.sendoToTTS("Não há mais opções à direita.")
                     return
 
+                play = card[self.selected].find_element(By.ID, "content")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '';
+                        """, play
+                )
                 self.selected += 1
 
                 play = card[self.selected].find_element(By.ID, "content")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, play
+                )
 
                 actions = ActionChains(self.browser)
                 actions.move_to_element(play).perform()
@@ -772,9 +1074,20 @@ class YoutubeMusic:
                     self.sendoToTTS("Não há mais opções à esquerda.")
                     return
 
+                play = card[self.selected].find_element(By.ID, "content")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '';
+                        """, play
+                )
                 self.selected -= 1
 
                 play = card[self.selected].find_element(By.ID, "content")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, play
+                )
 
                 actions = ActionChains(self.browser)
                 actions.move_to_element(play).perform()
@@ -795,9 +1108,20 @@ class YoutubeMusic:
                     self.sendoToTTS("Não há mais opções à esquerda.")
                     return
 
+                play = card[self.selected].find_element(By.CSS_SELECTOR, "button")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '';
+                        """, play
+                )
                 self.selected -= 4
 
                 play = card[self.selected].find_element(By.CSS_SELECTOR, "button")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, play
+                )
 
                 actions = ActionChains(self.browser)
                 actions.move_to_element(play).perform()
@@ -818,9 +1142,20 @@ class YoutubeMusic:
                     self.sendoToTTS("Não há mais opções à esquerda.")
                     return
 
+                play = card[self.selected].find_element(By.ID, "content")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '';
+                        """, play
+                )
                 self.selected -= 4
 
                 play = card[self.selected].find_element(By.ID, "content")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, play
+                )
 
                 actions = ActionChains(self.browser)
                 actions.move_to_element(play).perform()
@@ -840,10 +1175,21 @@ class YoutubeMusic:
                 if self.selected - 1 < 0:
                     self.sendoToTTS("Não há mais opções à esquerda.")
                     return
-
+                
+                play = card[self.selected].find_element(By.ID, "content")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '';
+                        """, play
+                )
                 self.selected -= 1
 
                 play = card[self.selected].find_element(By.ID, "content")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, play
+                )
 
                 actions = ActionChains(self.browser)
                 actions.move_to_element(play).perform()
@@ -879,9 +1225,20 @@ class YoutubeMusic:
                     self.sendoToTTS("Não há mais opções abaixo.")
                     return
 
+                play = card[self.selected].find_element(By.CSS_SELECTOR, "button")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '';
+                        """, play
+                )
                 self.selected += 1
 
                 play = card[self.selected].find_element(By.CSS_SELECTOR, "button")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, play
+                )
 
                 actions = ActionChains(self.browser)
                 actions.move_to_element(play).perform()
@@ -902,9 +1259,20 @@ class YoutubeMusic:
                     self.sendoToTTS("Não há mais opções abaixo.")
                     return
 
+                play = card[self.selected].find_element(By.ID, "content")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '';
+                        """, play
+                )
                 self.selected += 1
 
                 play = card[self.selected].find_element(By.ID, "content")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, play
+                )
 
                 actions = ActionChains(self.browser)
                 actions.move_to_element(play).perform()
@@ -936,13 +1304,24 @@ class YoutubeMusic:
                     "#items ytmusic-navigation-button-renderer",
                 )
 
-                if (self.selected - 1) % 4 == 1 or self.selected - 1 < 0:
+                if self.selected - 4 < 0:
                     self.sendoToTTS("Não há mais opções acima.")
                     return
 
+                play = card[self.selected].find_element(By.CSS_SELECTOR, "button")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '';
+                        """, play
+                )
                 self.selected -= 1
 
                 play = card[self.selected].find_element(By.CSS_SELECTOR, "button")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, play
+                )
 
                 actions = ActionChains(self.browser)
                 actions.move_to_element(play).perform()
@@ -959,13 +1338,25 @@ class YoutubeMusic:
                     "#items ytmusic-responsive-list-item-renderer",
                 )
 
-                if (self.selected - 1) % 4 == 1 or self.selected - 1 < 0:
+                if self.selected - 4 < 0:
                     self.sendoToTTS("Não há mais opções acima.")
                     return
 
+                play = card[self.selected].find_element(By.ID, "content")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '';
+                        """, play
+                )
+                
                 self.selected -= 1
 
                 play = card[self.selected].find_element(By.ID, "content")
+                self.browser.execute_script(
+                        """
+                        arguments[0].style.border = '2px solid red';
+                        """, play
+                )
 
                 actions = ActionChains(self.browser)
                 actions.move_to_element(play).perform()
