@@ -1361,6 +1361,23 @@ class YoutubeMusic:
             LAST_ACTION = "select_something_category"
         except:
             self.sendoToTTS("Não foi possível selecionar a opção.")
+    
+    def play_music_by_link(self):
+        global LAST_ACTION
+        try:
+            # Get a random music link
+            link = random_music()
+
+            # Open the specified link in the browser
+            self.browser.get(link)
+
+            # Set music_playing to True and update LAST_ACTION
+            self.music_playing = True
+            LAST_ACTION = "play_music_by_link"
+
+        except Exception as e:
+            print(f"Error playing music by link: {e}")
+            self.sendoToTTS("Não foi possível reproduzir a música.")
 
     def help(self, option):
         global LAST_ACTION

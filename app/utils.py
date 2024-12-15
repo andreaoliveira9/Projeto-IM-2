@@ -30,6 +30,13 @@ def random_not_understand():
         "Comando não entendido, pode tentar de novo?",
     ]
 
+@randomize
+def random_music():
+    return [
+        "https://music.youtube.com/watch?v=dQw4w9WgXcQ",
+        "https://music.youtube.com/watch?v=RON76igAj7A",
+        "https://music.youtube.com/watch?v=dlObDivWgx8"
+    ]
 
 class IntentNotUnderstoodWellVoice:
     def __init__(self, intent, entities):

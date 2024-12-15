@@ -394,6 +394,8 @@ def gesture_control(youtube_music, message):
         youtube_music.move_left_category()
     elif message == "MOVERIGHTCATEGORY":  # Apontar para a direita
         youtube_music.move_right_category()
+    elif message == "RANDOMMUSIC":  # Fazer gesto de shaka
+        youtube_music.play_music_by_link()
     elif message == "SELECTPAUSE":  # Mão aberta e movert para a frente
         if (
             LAST_ACTION == "scroll_up_categories"
