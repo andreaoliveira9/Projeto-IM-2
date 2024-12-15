@@ -19,7 +19,9 @@ from mapping import Buttons, Inputs
 import logging
 
 # Configure logging
-logging.basicConfig(filename='play.log', level=logging.INFO, format='%(asctime)s - %(message)s')
+logging.basicConfig(
+    filename="play.log", level=logging.INFO, format="%(asctime)s - %(message)s"
+)
 
 LAST_ACTION = None
 
@@ -587,6 +589,7 @@ class YoutubeMusic:
 
     def open_explore(self):
         global LAST_ACTION
+        self.browser.get("https://music.youtube.com/explore")
         try:
             self.explore_selected = 0
             self.selected = 0
@@ -604,15 +607,20 @@ class YoutubeMusic:
                         "#items ytmusic-two-row-item-renderer",
                     )
 
-                    self.current_selected_category = card[self.selected].find_element(By.ID, "content")
+                    self.current_selected_category = card[self.selected].find_element(
+                        By.ID, "content"
+                    )
                     self.browser.execute_script(
                         """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
+                        """,
+                        self.current_selected_category,
                     )
                     actions = ActionChains(self.browser)
                     actions.move_to_element(self.current_selected_category).perform()
                     self.button_selected = self.current_selected_category
+
+                    self.music_playing = False
             except:
                 self.sendoToTTS("Não foi possível selecionar o primeiro elemento.")
 
@@ -645,31 +653,35 @@ class YoutubeMusic:
 
             self.explore_selected = index
             if self.explore_selected == 0:
-                    container = self.browser.find_element(
-                        By.XPATH,
-                        "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-browse-response/div[2]/div[4]/ytmusic-section-list-renderer/div[2]/ytmusic-carousel-shelf-renderer[1]/div/ytmusic-carousel/div/ul",
-                    )
+                container = self.browser.find_element(
+                    By.XPATH,
+                    "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-browse-response/div[2]/div[4]/ytmusic-section-list-renderer/div[2]/ytmusic-carousel-shelf-renderer[1]/div/ytmusic-carousel/div/ul",
+                )
 
-                    card = container.find_elements(
-                        By.CSS_SELECTOR,
-                        "#items ytmusic-two-row-item-renderer",
-                    )
+                card = container.find_elements(
+                    By.CSS_SELECTOR,
+                    "#items ytmusic-two-row-item-renderer",
+                )
 
-                    self.browser.execute_script(
-                        """
+                self.browser.execute_script(
+                    """
                         arguments[0].style.border = '';
-                        """, self.current_selected_category
-                    )
+                        """,
+                    self.current_selected_category,
+                )
 
-                    self.current_selected_category = card[self.selected].find_element(By.ID, "content")
-                    self.browser.execute_script(
-                        """
+                self.current_selected_category = card[self.selected].find_element(
+                    By.ID, "content"
+                )
+                self.browser.execute_script(
+                    """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
-                    )
-                    actions = ActionChains(self.browser)
-                    actions.move_to_element(self.current_selected_category).perform()
-                    self.button_selected = self.current_selected_category
+                        """,
+                    self.current_selected_category,
+                )
+                actions = ActionChains(self.browser)
+                actions.move_to_element(self.current_selected_category).perform()
+                self.button_selected = self.current_selected_category
 
             elif self.explore_selected == 1:
                 container = self.browser.find_element(
@@ -683,17 +695,21 @@ class YoutubeMusic:
                 )
 
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
                 self.selected = 0
 
-                self.current_selected_category = card[self.selected].find_element(By.CSS_SELECTOR, "button")
+                self.current_selected_category = card[self.selected].find_element(
+                    By.CSS_SELECTOR, "button"
+                )
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
 
                 actions = ActionChains(self.browser)
@@ -712,17 +728,21 @@ class YoutubeMusic:
                 )
 
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
                 self.selected = 0
 
-                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
+                self.current_selected_category = card[self.selected].find_element(
+                    By.ID, "content"
+                )
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
 
                 actions = ActionChains(self.browser)
@@ -740,17 +760,21 @@ class YoutubeMusic:
                 )
 
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
                 self.selected = 0
 
-                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
+                self.current_selected_category = card[self.selected].find_element(
+                    By.ID, "content"
+                )
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
 
                 actions = ActionChains(self.browser)
@@ -767,7 +791,7 @@ class YoutubeMusic:
         if self.browser.current_url != "https://music.youtube.com/explore":
             self.sendoToTTS("Não é possível mover para baixo nesta página.")
             return
-        
+
         index = self.explore_selected + 1
         if index >= len(explore_categories):
             self.sendoToTTS("Não há mais categorias abaixo.")
@@ -786,31 +810,35 @@ class YoutubeMusic:
 
             self.explore_selected = index
             if self.explore_selected == 0:
-                    container = self.browser.find_element(
-                        By.XPATH,
-                        "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-browse-response/div[2]/div[4]/ytmusic-section-list-renderer/div[2]/ytmusic-carousel-shelf-renderer[1]/div/ytmusic-carousel/div/ul",
-                    )
+                container = self.browser.find_element(
+                    By.XPATH,
+                    "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-browse-response/div[2]/div[4]/ytmusic-section-list-renderer/div[2]/ytmusic-carousel-shelf-renderer[1]/div/ytmusic-carousel/div/ul",
+                )
 
-                    card = container.find_elements(
-                        By.CSS_SELECTOR,
-                        "#items ytmusic-two-row-item-renderer",
-                    )
+                card = container.find_elements(
+                    By.CSS_SELECTOR,
+                    "#items ytmusic-two-row-item-renderer",
+                )
 
-                    self.browser.execute_script(
-                        """
+                self.browser.execute_script(
+                    """
                         arguments[0].style.border = '';
-                        """, self.current_selected_category
-                    )
+                        """,
+                    self.current_selected_category,
+                )
 
-                    self.current_selected_category = card[self.selected].find_element(By.ID, "content")
-                    self.browser.execute_script(
-                        """
+                self.current_selected_category = card[self.selected].find_element(
+                    By.ID, "content"
+                )
+                self.browser.execute_script(
+                    """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
-                    )
-                    actions = ActionChains(self.browser)
-                    actions.move_to_element(self.current_selected_category).perform()
-                    self.button_selected = self.current_selected_category
+                        """,
+                    self.current_selected_category,
+                )
+                actions = ActionChains(self.browser)
+                actions.move_to_element(self.current_selected_category).perform()
+                self.button_selected = self.current_selected_category
 
             elif self.explore_selected == 1:
                 container = self.browser.find_element(
@@ -824,17 +852,21 @@ class YoutubeMusic:
                 )
 
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
                 self.selected = 0
 
-                self.current_selected_category = card[self.selected].find_element(By.CSS_SELECTOR, "button")
+                self.current_selected_category = card[self.selected].find_element(
+                    By.CSS_SELECTOR, "button"
+                )
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
 
                 actions = ActionChains(self.browser)
@@ -853,17 +885,21 @@ class YoutubeMusic:
                 )
 
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
                 self.selected = 0
 
-                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
+                self.current_selected_category = card[self.selected].find_element(
+                    By.ID, "content"
+                )
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
 
                 actions = ActionChains(self.browser)
@@ -881,17 +917,21 @@ class YoutubeMusic:
                 )
 
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
                 self.selected = 0
 
-                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
+                self.current_selected_category = card[self.selected].find_element(
+                    By.ID, "content"
+                )
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
 
                 actions = ActionChains(self.browser)
@@ -914,7 +954,6 @@ class YoutubeMusic:
                     By.XPATH,
                     "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-browse-response/div[2]/div[4]/ytmusic-section-list-renderer/div[2]/ytmusic-carousel-shelf-renderer[1]/div/ytmusic-carousel/div/ul",
                 )
-                
 
                 card = container.find_elements(
                     By.CSS_SELECTOR,
@@ -924,20 +963,24 @@ class YoutubeMusic:
                 if self.selected + 1 > len(card) - 1:
                     self.sendoToTTS("Não há mais opções à direita.")
                     return
-                
+
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
 
                 self.selected += 1
 
-                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
+                self.current_selected_category = card[self.selected].find_element(
+                    By.ID, "content"
+                )
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
 
                 actions = ActionChains(self.browser)
@@ -960,17 +1003,21 @@ class YoutubeMusic:
                     return
 
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
                 self.selected += 4
 
-                self.current_selected_category = card[self.selected].find_element(By.CSS_SELECTOR, "button")
+                self.current_selected_category = card[self.selected].find_element(
+                    By.CSS_SELECTOR, "button"
+                )
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
 
                 actions = ActionChains(self.browser)
@@ -994,17 +1041,21 @@ class YoutubeMusic:
                     return
 
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
                 self.selected += 4
 
-                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
+                self.current_selected_category = card[self.selected].find_element(
+                    By.ID, "content"
+                )
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
 
                 actions = ActionChains(self.browser)
@@ -1027,17 +1078,21 @@ class YoutubeMusic:
                     return
 
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
                 self.selected += 1
 
-                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
+                self.current_selected_category = card[self.selected].find_element(
+                    By.ID, "content"
+                )
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
 
                 actions = ActionChains(self.browser)
@@ -1071,17 +1126,21 @@ class YoutubeMusic:
                     return
 
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
                 self.selected -= 1
 
-                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
+                self.current_selected_category = card[self.selected].find_element(
+                    By.ID, "content"
+                )
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
 
                 actions = ActionChains(self.browser)
@@ -1104,17 +1163,21 @@ class YoutubeMusic:
                     return
 
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
                 self.selected -= 4
 
-                self.current_selected_category = card[self.selected].find_element(By.CSS_SELECTOR, "button")
+                self.current_selected_category = card[self.selected].find_element(
+                    By.CSS_SELECTOR, "button"
+                )
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
 
                 actions = ActionChains(self.browser)
@@ -1137,17 +1200,21 @@ class YoutubeMusic:
                     return
 
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
                 self.selected -= 4
 
-                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
+                self.current_selected_category = card[self.selected].find_element(
+                    By.ID, "content"
+                )
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
 
                 actions = ActionChains(self.browser)
@@ -1168,19 +1235,23 @@ class YoutubeMusic:
                 if self.selected - 1 < 0:
                     self.sendoToTTS("Não há mais opções à esquerda.")
                     return
-                
+
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
                 self.selected -= 1
 
-                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
+                self.current_selected_category = card[self.selected].find_element(
+                    By.ID, "content"
+                )
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
 
                 actions = ActionChains(self.browser)
@@ -1218,17 +1289,21 @@ class YoutubeMusic:
                     return
 
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
                 self.selected += 1
 
-                self.current_selected_category = card[self.selected].find_element(By.CSS_SELECTOR, "button")
+                self.current_selected_category = card[self.selected].find_element(
+                    By.CSS_SELECTOR, "button"
+                )
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
 
                 actions = ActionChains(self.browser)
@@ -1251,17 +1326,21 @@ class YoutubeMusic:
                     return
 
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
                 self.selected += 1
 
-                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
+                self.current_selected_category = card[self.selected].find_element(
+                    By.ID, "content"
+                )
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
 
                 actions = ActionChains(self.browser)
@@ -1299,17 +1378,21 @@ class YoutubeMusic:
                     return
 
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
                 self.selected -= 1
 
-                self.current_selected_category = card[self.selected].find_element(By.CSS_SELECTOR, "button")
+                self.current_selected_category = card[self.selected].find_element(
+                    By.CSS_SELECTOR, "button"
+                )
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
 
                 actions = ActionChains(self.browser)
@@ -1332,18 +1415,22 @@ class YoutubeMusic:
                     return
 
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
-                
+
                 self.selected -= 1
 
-                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
+                self.current_selected_category = card[self.selected].find_element(
+                    By.ID, "content"
+                )
                 self.browser.execute_script(
-                        """
+                    """
                         arguments[0].style.border = '2px solid red';
-                        """, self.current_selected_category
+                        """,
+                    self.current_selected_category,
                 )
 
                 actions = ActionChains(self.browser)
@@ -1358,10 +1445,11 @@ class YoutubeMusic:
         global LAST_ACTION
         try:
             self.button_selected.click()
+            self.music_playing = True
             LAST_ACTION = "select_something_category"
         except:
             self.sendoToTTS("Não foi possível selecionar a opção.")
-    
+
     def play_music_by_link(self):
         global LAST_ACTION
         try:

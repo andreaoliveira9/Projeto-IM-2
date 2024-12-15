@@ -359,27 +359,38 @@ def speech_control(youtube_music, message):
 
 
 def gesture_control(youtube_music, message):
+    global gesture_confirmation
     from youtube_music import LAST_ACTION
 
     print(f"Gesture received: {message}")
 
-    if message == "HANDGOODBYE":  # Acenar com a mão para sair
-        global not_quit, gesture_confirmation
-        if gesture_confirmation == "HANDGOODBYE":
+    is_exploring = (
+        LAST_ACTION == "scroll_up_categories"
+        or LAST_ACTION == "scroll_down_categories"
+        or LAST_ACTION == "move_down_category"
+        or LAST_ACTION == "move_left_category"
+        or LAST_ACTION == "move_right_category"
+        or LAST_ACTION == "move_up_category"
+        or LAST_ACTION == "open_explore"
+    )
+
+    can_resume = youtube_music.paused and youtube_music.music_playing
+
+    if gesture_confirmation and message != gesture_confirmation:
+        gesture_confirmation = None
+
+    if message == "ARMSX":  # Acenar com a mão para sair
+        global not_quit
+        if gesture_confirmation == "ARMSX":
             not_quit = False
+            youtube_music.sendoToTTS("Até à próxima!")
         else:
-            gesture_confirmation = "HANDGOODBYE"
+            gesture_confirmation = "ARMSX"
             youtube_music.sendoToTTS("Tens a certeza que queres sair?")
-    elif message == "HANDMUTE":  # Fazer gesto de shiu na boca
+    elif message == "MOUTHHAND":  # Fazer gesto de shiu na boca
         youtube_music.mute()
-    elif message == "HANDUNMUTE":  # Apontar para a boca
+    elif message == "EARHAND":  # Apontar para a boca
         youtube_music.unmute()
-    elif message == "HANDRESUME":  # Girar com as mãos para a frente
-        youtube_music.resume()
-    elif message == "HANDNEXT":  # Deslocar mão para a direita
-        youtube_music.next_song()
-    elif message == "HANDPREVIOUS":  # Deslocar mão para a esquerda
-        youtube_music.previous_song()
     elif message == "SCRATCHHEAD":  # Abrir mãos como se fosse um livro
         youtube_music.open_explore()
     elif message == "MOVEUPL":  # Mão em pinça para baixo
@@ -390,23 +401,23 @@ def gesture_control(youtube_music, message):
         youtube_music.move_up_category()
     elif message == "MOVEDOWNR":  # Apontar para baixo
         youtube_music.move_down_category()
-    elif message == "MOVELEFT":  # Apontar para a esquerda
-        youtube_music.move_left_category()
-    elif message == "MOVERIGHT":  # Apontar para a direita
-        youtube_music.move_right_category()
+    elif message == "MOVELEFT":
+        if is_exploring:
+            youtube_music.move_left_category()
+        else:
+            youtube_music.previous_song()
+    elif message == "MOVERIGHT":
+        if is_exploring:
+            youtube_music.move_right_category()
+        else:
+            youtube_music.next_song()
     elif message == "RANDOMMUSIC":  # Fazer gesto de shaka
         youtube_music.play_music_by_link()
     elif message == "PUSH":  # Mão aberta e movert para a frente
-        if (
-            LAST_ACTION == "scroll_up_categories"
-            or LAST_ACTION == "scroll_down_categories"
-            or LAST_ACTION == "move_down_category"
-            or LAST_ACTION == "move_left_category"
-            or LAST_ACTION == "move_right_category"
-            or LAST_ACTION == "move_up_category"
-            or LAST_ACTION == "open_explore"
-        ):
+        if is_exploring:
             youtube_music.select_something_category()
+        elif can_resume:
+            youtube_music.resume()
         else:
             youtube_music.pause()
 
@@ -434,6 +445,7 @@ async def main():
             except Exception as e:
                 tts("Ocorreu um erro, a fechar o aplicativo")
                 print(f"Error: {e}")
+                break
 
         youtube_music.close()
         exit(0)

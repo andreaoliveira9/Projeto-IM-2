@@ -2,41 +2,56 @@
 <Gestures>
   <Gesture>
     <ID>0</ID>
+    <NAME>ARMSX</NAME>
+    <SEMANTIC>ARMSX</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>1</ID>
+    <NAME>EARHAND</NAME>
+    <SEMANTIC>EARHAND</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>2</ID>
+    <NAME>MOUTHHAND</NAME>
+    <SEMANTIC>MOUTHHAND</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>3</ID>
     <NAME>MOVEDOWN_Left</NAME>
     <SEMANTIC>MOVEDOWNL</SEMANTIC>
   </Gesture>
   <Gesture>
-    <ID>1</ID>
+    <ID>4</ID>
     <NAME>MOVEDOWN_Right</NAME>
     <SEMANTIC>MOVEDOWNR</SEMANTIC>
   </Gesture>
   <Gesture>
-    <ID>2</ID>
+    <ID>5</ID>
     <NAME>MOVELEFT</NAME>
     <SEMANTIC>MOVELEFT</SEMANTIC>
   </Gesture>
   <Gesture>
-    <ID>3</ID>
+    <ID>6</ID>
     <NAME>MOVERIGHT</NAME>
     <SEMANTIC>MOVERIGHT</SEMANTIC>
   </Gesture>
   <Gesture>
-    <ID>4</ID>
+    <ID>7</ID>
     <NAME>MOVEUP_Left</NAME>
     <SEMANTIC>MOVEUPL</SEMANTIC>
   </Gesture>
   <Gesture>
-    <ID>5</ID>
+    <ID>8</ID>
     <NAME>MOVEUP_Right</NAME>
     <SEMANTIC>MOVEUPR</SEMANTIC>
   </Gesture>
   <Gesture>
-    <ID>6</ID>
+    <ID>9</ID>
     <NAME>PUSH</NAME>
     <SEMANTIC>PUSH</SEMANTIC>
   </Gesture>
   <Gesture>
-    <ID>7</ID>
+    <ID>10</ID>
     <NAME>SCRATCHHEAD</NAME>
     <SEMANTIC>SCRATCHHEAD</SEMANTIC>
   </Gesture>
