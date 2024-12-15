@@ -32,6 +32,11 @@
   </Gesture>
   <Gesture>
     <ID>6</ID>
+    <NAME>PUSH</NAME>
+    <SEMANTIC>PUSH</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>7</ID>
     <NAME>SCRATCHHEAD</NAME>
     <SEMANTIC>SCRATCHHEAD</SEMANTIC>
   </Gesture>
