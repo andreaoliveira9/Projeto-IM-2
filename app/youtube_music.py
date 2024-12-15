@@ -925,25 +925,24 @@ class YoutubeMusic:
                     self.sendoToTTS("Não há mais opções à direita.")
                     return
                 
-                play = card[self.selected].find_element(By.ID, "content")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '';
-                        """, play
+                        """, self.current_selected_category
                 )
 
                 self.selected += 1
 
-                play = card[self.selected].find_element(By.ID, "content")
+                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '2px solid red';
-                        """, play
+                        """, self.current_selected_category
                 )
 
                 actions = ActionChains(self.browser)
-                actions.move_to_element(play).perform()
-                self.button_selected = play
+                actions.move_to_element(self.current_selected_category).perform()
+                self.button_selected = self.current_selected_category
 
             elif self.explore_selected == 1:
                 container = self.browser.find_element(
@@ -960,24 +959,23 @@ class YoutubeMusic:
                     self.sendoToTTS("Não há mais opções à direita.")
                     return
 
-                play = card[self.selected].find_element(By.CSS_SELECTOR, "button")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '';
-                        """, play
+                        """, self.current_selected_category
                 )
                 self.selected += 4
 
-                play = card[self.selected].find_element(By.CSS_SELECTOR, "button")
+                self.current_selected_category = card[self.selected].find_element(By.CSS_SELECTOR, "button")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '2px solid red';
-                        """, play
+                        """, self.current_selected_category
                 )
 
                 actions = ActionChains(self.browser)
-                actions.move_to_element(play).perform()
-                self.button_selected = play
+                actions.move_to_element(self.current_selected_category).perform()
+                self.button_selected = self.current_selected_category
 
             elif self.explore_selected == 2:
                 container = self.browser.find_element(
@@ -995,24 +993,23 @@ class YoutubeMusic:
                     self.sendoToTTS("Não há mais opções à direita.")
                     return
 
-                play = card[self.selected].find_element(By.ID, "content")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '';
-                        """, play
+                        """, self.current_selected_category
                 )
                 self.selected += 4
 
-                play = card[self.selected].find_element(By.ID, "content")
+                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '2px solid red';
-                        """, play
+                        """, self.current_selected_category
                 )
 
                 actions = ActionChains(self.browser)
-                actions.move_to_element(play).perform()
-                self.button_selected = play
+                actions.move_to_element(self.current_selected_category).perform()
+                self.button_selected = self.current_selected_category
 
             elif self.explore_selected == 3:
                 container = self.browser.find_element(
@@ -1029,24 +1026,23 @@ class YoutubeMusic:
                     self.sendoToTTS("Não há mais opções à direita.")
                     return
 
-                play = card[self.selected].find_element(By.ID, "content")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '';
-                        """, play
+                        """, self.current_selected_category
                 )
                 self.selected += 1
 
-                play = card[self.selected].find_element(By.ID, "content")
+                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '2px solid red';
-                        """, play
+                        """, self.current_selected_category
                 )
 
                 actions = ActionChains(self.browser)
-                actions.move_to_element(play).perform()
-                self.button_selected = play
+                actions.move_to_element(self.current_selected_category).perform()
+                self.button_selected = self.current_selected_category
 
             LAST_ACTION = "move_right_category"
         except:
@@ -1074,24 +1070,23 @@ class YoutubeMusic:
                     self.sendoToTTS("Não há mais opções à esquerda.")
                     return
 
-                play = card[self.selected].find_element(By.ID, "content")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '';
-                        """, play
+                        """, self.current_selected_category
                 )
                 self.selected -= 1
 
-                play = card[self.selected].find_element(By.ID, "content")
+                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '2px solid red';
-                        """, play
+                        """, self.current_selected_category
                 )
 
                 actions = ActionChains(self.browser)
-                actions.move_to_element(play).perform()
-                self.button_selected = play
+                actions.move_to_element(self.current_selected_category).perform()
+                self.button_selected = self.current_selected_category
 
             elif self.explore_selected == 1:
                 container = self.browser.find_element(
@@ -1108,24 +1103,23 @@ class YoutubeMusic:
                     self.sendoToTTS("Não há mais opções à esquerda.")
                     return
 
-                play = card[self.selected].find_element(By.CSS_SELECTOR, "button")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '';
-                        """, play
+                        """, self.current_selected_category
                 )
                 self.selected -= 4
 
-                play = card[self.selected].find_element(By.CSS_SELECTOR, "button")
+                self.current_selected_category = card[self.selected].find_element(By.CSS_SELECTOR, "button")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '2px solid red';
-                        """, play
+                        """, self.current_selected_category
                 )
 
                 actions = ActionChains(self.browser)
-                actions.move_to_element(play).perform()
-                self.button_selected = play
+                actions.move_to_element(self.current_selected_category).perform()
+                self.button_selected = self.current_selected_category
 
             elif self.explore_selected == 2:
                 container = self.browser.find_element(
@@ -1142,24 +1136,23 @@ class YoutubeMusic:
                     self.sendoToTTS("Não há mais opções à esquerda.")
                     return
 
-                play = card[self.selected].find_element(By.ID, "content")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '';
-                        """, play
+                        """, self.current_selected_category
                 )
                 self.selected -= 4
 
-                play = card[self.selected].find_element(By.ID, "content")
+                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '2px solid red';
-                        """, play
+                        """, self.current_selected_category
                 )
 
                 actions = ActionChains(self.browser)
-                actions.move_to_element(play).perform()
-                self.button_selected = play
+                actions.move_to_element(self.current_selected_category).perform()
+                self.button_selected = self.current_selected_category
 
             elif self.explore_selected == 3:
                 container = self.browser.find_element(
@@ -1176,24 +1169,23 @@ class YoutubeMusic:
                     self.sendoToTTS("Não há mais opções à esquerda.")
                     return
                 
-                play = card[self.selected].find_element(By.ID, "content")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '';
-                        """, play
+                        """, self.current_selected_category
                 )
                 self.selected -= 1
 
-                play = card[self.selected].find_element(By.ID, "content")
+                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '2px solid red';
-                        """, play
+                        """, self.current_selected_category
                 )
 
                 actions = ActionChains(self.browser)
-                actions.move_to_element(play).perform()
-                self.button_selected = play
+                actions.move_to_element(self.current_selected_category).perform()
+                self.button_selected = self.current_selected_category
 
             LAST_ACTION = "move_left_category"
         except:
@@ -1225,24 +1217,23 @@ class YoutubeMusic:
                     self.sendoToTTS("Não há mais opções abaixo.")
                     return
 
-                play = card[self.selected].find_element(By.CSS_SELECTOR, "button")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '';
-                        """, play
+                        """, self.current_selected_category
                 )
                 self.selected += 1
 
-                play = card[self.selected].find_element(By.CSS_SELECTOR, "button")
+                self.current_selected_category = card[self.selected].find_element(By.CSS_SELECTOR, "button")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '2px solid red';
-                        """, play
+                        """, self.current_selected_category
                 )
 
                 actions = ActionChains(self.browser)
-                actions.move_to_element(play).perform()
-                self.button_selected = play
+                actions.move_to_element(self.current_selected_category).perform()
+                self.button_selected = self.current_selected_category
 
             elif self.explore_selected == 2:
                 container = self.browser.find_element(
@@ -1259,24 +1250,23 @@ class YoutubeMusic:
                     self.sendoToTTS("Não há mais opções abaixo.")
                     return
 
-                play = card[self.selected].find_element(By.ID, "content")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '';
-                        """, play
+                        """, self.current_selected_category
                 )
                 self.selected += 1
 
-                play = card[self.selected].find_element(By.ID, "content")
+                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '2px solid red';
-                        """, play
+                        """, self.current_selected_category
                 )
 
                 actions = ActionChains(self.browser)
-                actions.move_to_element(play).perform()
-                self.button_selected = play
+                actions.move_to_element(self.current_selected_category).perform()
+                self.button_selected = self.current_selected_category
 
             LAST_ACTION = "move_down_category"
         except:
@@ -1308,24 +1298,23 @@ class YoutubeMusic:
                     self.sendoToTTS("Não há mais opções acima.")
                     return
 
-                play = card[self.selected].find_element(By.CSS_SELECTOR, "button")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '';
-                        """, play
+                        """, self.current_selected_category
                 )
                 self.selected -= 1
 
-                play = card[self.selected].find_element(By.CSS_SELECTOR, "button")
+                self.current_selected_category = card[self.selected].find_element(By.CSS_SELECTOR, "button")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '2px solid red';
-                        """, play
+                        """, self.current_selected_category
                 )
 
                 actions = ActionChains(self.browser)
-                actions.move_to_element(play).perform()
-                self.button_selected = play
+                actions.move_to_element(self.current_selected_category).perform()
+                self.button_selected = self.current_selected_category
 
             elif self.explore_selected == 2:
                 container = self.browser.find_element(
@@ -1342,25 +1331,24 @@ class YoutubeMusic:
                     self.sendoToTTS("Não há mais opções acima.")
                     return
 
-                play = card[self.selected].find_element(By.ID, "content")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '';
-                        """, play
+                        """, self.current_selected_category
                 )
                 
                 self.selected -= 1
 
-                play = card[self.selected].find_element(By.ID, "content")
+                self.current_selected_category = card[self.selected].find_element(By.ID, "content")
                 self.browser.execute_script(
                         """
                         arguments[0].style.border = '2px solid red';
-                        """, play
+                        """, self.current_selected_category
                 )
 
                 actions = ActionChains(self.browser)
-                actions.move_to_element(play).perform()
-                self.button_selected = play
+                actions.move_to_element(self.current_selected_category).perform()
+                self.button_selected = self.current_selected_category
 
             LAST_ACTION = "move_up_category"
         except:

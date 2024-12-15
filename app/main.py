@@ -31,8 +31,8 @@ def process_message(message):
 async def message_handler(youtube_music: YoutubeMusic, message: str):
     message, typ = process_message(message)
 
-    typ = Type.GESTURE
-    message = "OPENEXPLORE"
+    #typ = Type.GESTURE
+    #message = "OPENEXPLORE"
     if typ == Type.SPEECH:
         speech_control(youtube_music, message)
     elif typ == Type.GESTURE:
@@ -40,7 +40,7 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
     elif typ == Type.OK:
         return
 
-    time.sleep(3)
+    ''' time.sleep(3)
 
 
     for i in range(2):
@@ -120,7 +120,7 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
         elif typ == Type.OK:
             return
         time.sleep(2)
-        
+
     for i in range(2):
         typ = Type.GESTURE
         message = "MOVEDOWNCATEGORY"
@@ -156,7 +156,7 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
 
     for i in range(1):
         typ = Type.GESTURE
-        message = "SELECTCATEGORY"
+        message = "SELECTPAUSE"
         if typ == Type.SPEECH:
             speech_control(youtube_music, message)
         elif typ == Type.GESTURE:
@@ -164,7 +164,7 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
         elif typ == Type.OK:
             return
 
-        time.sleep(1)
+        time.sleep(1) '''
 
 
 def speech_control(youtube_music, message):
