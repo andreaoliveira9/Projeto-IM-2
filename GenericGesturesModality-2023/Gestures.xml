@@ -2,22 +2,37 @@
 <Gestures>
   <Gesture>
     <ID>0</ID>
-    <NAME>MOVERIGHTCATEGORY</NAME>
-    <SEMANTIC>MOVERIGHTCATEGORY</SEMANTIC>
+    <NAME>MOVEDOWN_Left</NAME>
+    <SEMANTIC>MOVEDOWNL</SEMANTIC>
   </Gesture>
   <Gesture>
     <ID>1</ID>
-    <NAME>OPENEXPLORE</NAME>
-    <SEMANTIC>OPENEXPLORE</SEMANTIC>
+    <NAME>MOVEDOWN_Right</NAME>
+    <SEMANTIC>MOVEDOWNR</SEMANTIC>
   </Gesture>
   <Gesture>
     <ID>2</ID>
-    <NAME>SCROLLDOWN</NAME>
-    <SEMANTIC>SCROLLDOWN</SEMANTIC>
+    <NAME>MOVELEFT</NAME>
+    <SEMANTIC>MOVELEFT</SEMANTIC>
   </Gesture>
   <Gesture>
     <ID>3</ID>
-    <NAME>SCROLLUP</NAME>
-    <SEMANTIC>SCROLLUP</SEMANTIC>
+    <NAME>MOVERIGHT</NAME>
+    <SEMANTIC>MOVERIGHT</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>4</ID>
+    <NAME>MOVEUP_Left</NAME>
+    <SEMANTIC>MOVEUPL</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>5</ID>
+    <NAME>MOVEUP_Right</NAME>
+    <SEMANTIC>MOVEUPR</SEMANTIC>
+  </Gesture>
+  <Gesture>
+    <ID>6</ID>
+    <NAME>SCRATCHHEAD</NAME>
+    <SEMANTIC>SCRATCHHEAD</SEMANTIC>
   </Gesture>
 </Gestures>

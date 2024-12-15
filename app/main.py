@@ -31,8 +31,8 @@ def process_message(message):
 async def message_handler(youtube_music: YoutubeMusic, message: str):
     message, typ = process_message(message)
 
-    #typ = Type.GESTURE
-    #message = "OPENEXPLORE"
+    # typ = Type.GESTURE
+    # message = "OPENEXPLORE"
     if typ == Type.SPEECH:
         speech_control(youtube_music, message)
     elif typ == Type.GESTURE:
@@ -40,7 +40,7 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
     elif typ == Type.OK:
         return
 
-    ''' time.sleep(3)
+    """ time.sleep(3)
 
 
     for i in range(2):
@@ -164,7 +164,7 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
         elif typ == Type.OK:
             return
 
-        time.sleep(1) '''
+        time.sleep(1) """
 
 
 def speech_control(youtube_music, message):
@@ -380,23 +380,23 @@ def gesture_control(youtube_music, message):
         youtube_music.next_song()
     elif message == "HANDPREVIOUS":  # Deslocar mão para a esquerda
         youtube_music.previous_song()
-    elif message == "OPENEXPLORE":  # Abrir mãos como se fosse um livro
+    elif message == "SCRATCHHEAD":  # Abrir mãos como se fosse um livro
         youtube_music.open_explore()
-    elif message == "SCROLLUPCATEGORY":  # Mão em pinça para baixo
+    elif message == "MOVEUPL":  # Mão em pinça para baixo
         youtube_music.scroll_up_categories()
-    elif message == "SCROLLDOWNCATEGORY":  # Mão em pinça para cima
+    elif message == "MOVEDOWNL":  # Mão em pinça para cima
         youtube_music.scroll_down_categories()
-    elif message == "MOVEUPCATEGORY":  # Apontar para cima
+    elif message == "MOVEUPR":  # Apontar para cima
         youtube_music.move_up_category()
-    elif message == "MOVEDOWNCATEGORY":  # Apontar para baixo
+    elif message == "MOVEDOWNR":  # Apontar para baixo
         youtube_music.move_down_category()
-    elif message == "MOVELEFTCATEGORY":  # Apontar para a esquerda
+    elif message == "MOVELEFT":  # Apontar para a esquerda
         youtube_music.move_left_category()
-    elif message == "MOVERIGHTCATEGORY":  # Apontar para a direita
+    elif message == "MOVERIGHT":  # Apontar para a direita
         youtube_music.move_right_category()
     elif message == "RANDOMMUSIC":  # Fazer gesto de shaka
         youtube_music.play_music_by_link()
-    elif message == "SELECTPAUSE":  # Mão aberta e movert para a frente
+    elif message == "PUSH":  # Mão aberta e movert para a frente
         if (
             LAST_ACTION == "scroll_up_categories"
             or LAST_ACTION == "scroll_down_categories"
