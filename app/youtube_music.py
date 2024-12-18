@@ -1284,7 +1284,7 @@ class YoutubeMusic:
                     "#items ytmusic-navigation-button-renderer",
                 )
 
-                if (self.selected + 1) % 4 == 0:
+                if (self.selected + 1) > len(card) - 1:
                     self.sendoToTTS("Não há mais opções abaixo.")
                     return
 
@@ -1321,7 +1321,7 @@ class YoutubeMusic:
                     "#items ytmusic-responsive-list-item-renderer",
                 )
 
-                if (self.selected + 1) % 4 == 0:
+                if (self.selected + 1) > len(card) - 1:
                     self.sendoToTTS("Não há mais opções abaixo.")
                     return
 
@@ -1373,7 +1373,7 @@ class YoutubeMusic:
                     "#items ytmusic-navigation-button-renderer",
                 )
 
-                if self.selected - 4 < 0:
+                if self.selected - 1 < 0:
                     self.sendoToTTS("Não há mais opções acima.")
                     return
 
@@ -1410,7 +1410,7 @@ class YoutubeMusic:
                     "#items ytmusic-responsive-list-item-renderer",
                 )
 
-                if self.selected - 4 < 0:
+                if self.selected - 1 < 0:
                     self.sendoToTTS("Não há mais opções acima.")
                     return
 
