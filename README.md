@@ -1,16 +1,9 @@
 # Projeto-IM-2
 
-## RASA
+## Generic Gestures Modality
 
 ```bash
-$ conda activate rasa-env
-
-$ cd C:\Users\andre\OneDrive\Ambiente de Trabalho\mei-IM\assigment2\aulas\DemoMMI\rasaDemo
-
-$ rasa train
-
-
-$ rasa run --enable-api -m .\models\ --cors "*"
+$ ./GenericGesturesModality.exe
 ```
 
 ## FusionEngine
@@ -25,13 +18,13 @@ $ ./start.bat
 $ ./start.bat
 ```
 
-## WebApp
+## Web Assistant
 
 ```bash
 $ ./start_web_app.bat
 ```
 
-### Run
+### App
 
 ```bash
 $ python main.py
