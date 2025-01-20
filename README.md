@@ -1,5 +1,7 @@
 # Projeto-IM-2
 
+Nota: 17
+
 ## Generic Gestures Modality
 
 ```bash
